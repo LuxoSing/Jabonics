@@ -1,0 +1,72 @@
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="/"> Interfaz de Usuario</a>
+  <div class="d-flex align-items-end flex-column">
+    <button type="button" class="btn btn-danger" routerLink="../home">Regresar</button>
+  </div>
+</nav>
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-start h-100">
+    <div class="col-col-xl-10">
+      <div class="d-flex justify-content-center mb-3 pb-1" >
+        <!--<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>-->
+        <span class="h1 fw-bold mb-0">Lista de Usuarios</span>
+        
+      </div>
+      
+      <table class="table table-dark table-striped mb-5">
+  
+        <thead>
+          <tr>
+                <th scope="col">IdUsuario</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Contraseña</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let Usuario of UsuarioArray; let CUsuario=index" (click)="openForEdit(Usuario)" [class.active]="Usuario == selectedUsuario">
+                    
+                <th scope="row">{{ Usuario.CUsuario}}</th>
+                <td>{{ Usuario.NUsuario }}</td>
+                <td>{{ Usuario.TContrasena }}</td>
+                {{Usuario.CUsuario+1}}
+            </tr>
+    
+        </tbody>
+      </table>
+
+      <!-- <div class="card mt-4"> -->
+        <!-- <div class="card-body"> -->
+          <!-- <div class="card-title">
+            Insertar - Eliminar usuario
+          </div> -->
+          <!-- 4 -->
+          <div class="d-flex justify-content-center mb-3 pb-1" >
+            <!--<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>-->
+            <span class="h1 fw-bold mb-0">Insertar o Eliminar usuario</span>
+            
+          </div>
+
+            <div class="form-outline mb-4">
+              <label class="form-label" for="form2Example17">Nombre de usuario</label>
+              <input type="text" [(ngModel)]="selectedUsuario.NUsuario" class="form-control form-control-lg" placeholder="Ingresar nombre de usuario"
+              name="NUsuario"/>
+            </div>
+            
+            <div class="form-outline mb-4">
+              <label class="form-label" for="form2Example18">Contraseña</label>
+              <input type="text" [(ngModel)]="selectedUsuario.TContrasena" class="form-control form-control-lg" placeholder="Insertar contraseña"
+              name="TContrasena"/>
+            </div>
+
+            <div class="p-1 mb-4" style=" justify-content:center; text-align:center">
+              <button (click)="addOrEdit()" class="btn btn-primary">Enviar</button>
+              
+            <!-- 6 Eliminar-->
+
+            <!-- <button *ngIf="selectedUsuario.CUsuario !==0" class="btn btn-danger" (click)="delete()">Eliminar</button> -->
+
+              <button (click)="delete()" class="btn btn-danger">Eliminar</button>
+            </div>
+      </div>
+    </div>
+</div>

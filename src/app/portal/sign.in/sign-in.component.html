@@ -1,0 +1,30 @@
+<div class="signin">
+    <form [formGroup]="form" (ngSubmit)="signIn()">
+        <mat-card class="signin__card">
+            <mat-card-title>Bienvenido a Yastas</mat-card-title>
+            <mat-card-content>
+                <p>
+                    <mat-form-field appearance="legacy" class="yts_width_full">
+                        <mat-label>Usuario</mat-label>
+                        <input matInput type="text" placeholder="Usuario" formControlName="username" autocomplete="off">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="legacy" class="yts_width_full">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput type="password" placeholder="Contraseña" formControlName="password"
+                            autocomplete="off">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-checkbox class="" formControlName="rememberme">Recuérdame</mat-checkbox>
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button type="submit" [disabled]="formValid">
+                    Iniciar sesión
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>
