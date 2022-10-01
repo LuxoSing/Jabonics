@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { last } from 'rxjs';
 import { ProductoHttp } from '../commons/http/producto.http';
 import { TipoProductoHttp } from '../commons/http/tipo-producto.http';
 import { IProducto } from '../commons/interfaces/producto.interface';
@@ -32,11 +33,11 @@ export class ProductoComponent implements OnInit {
     this.productoForm = this.fb.group({
       CProducto: [null],
       NProducto: [null, [Validators.required]],
-      CTipoProducto: [null, [Validators.required]]
+      CTipoProducto: [null, [Validators.required]],
+      MPrecio: [null, [Validators.required]]
     });
     this.dataSource = new MatTableDataSource();
     this.displayedColumns = [
-      'nro',
       'codigo',
       'nombre',
       'tipoproducto',
@@ -83,7 +84,8 @@ export class ProductoComponent implements OnInit {
     this.productoForm.setValue({
       CProducto: element.CProducto,
       NProducto: element.NProducto,
-      CTipoProducto: element.CTipoProducto
+      CTipoProducto: element.CTipoProducto,
+      MPrecio: element.MPrecio
     });
   }
 
@@ -100,17 +102,28 @@ export class ProductoComponent implements OnInit {
       if (producto.CProducto) {
         // edito
         const productoFound = this.productoList.find(x => x.CProducto === producto.CProducto);
-        productoFound.NProducto = producto.NProducto;
+        productoFound.NProducto;
         productoFound.CTipoProducto = producto.CTipoProducto;
         productoFound.NTipoProducto = this.TipoProductoList.find(x => x.CTipoProducto === producto.CTipoProducto).NTipoProducto;
         productoFound.MPrecio = producto.MPrecio;
-
         console.log('productoFound', productoFound);
+        
       } else {
         // agrego
         producto.NTipoProducto = this.TipoProductoList.find(x => x.CTipoProducto === producto.CTipoProducto).NTipoProducto;
+        const ids = this.productoList.map(object => {
+          return object.CProducto;
+        });
+        console.log(ids);
+        
+        const max = Math.max.apply(null,ids);
+        producto.CProducto = max +1;
+
         this.productoList.push(producto);
         this.dataSource = new MatTableDataSource(this.productoList);
+
+        // console.log('max', max);
+        // console.log('ids', ids);
       }
     }
   }
@@ -119,12 +132,9 @@ export class ProductoComponent implements OnInit {
     this.productoForm.patchValue({
       CProducto: null,
       NProducto: null,
-      CTipoProducto: null
+      CTipoProducto: null,
+      MPrecio: null
     });
     this.labelAddOrEdit = 'Agregar';
   }
-
-  // goToViewDetail(id: number): void {
-  //   this.router.navigate(['../dish-detail', id], {relativeTo: this.activatedRoute});
-  // }
 }

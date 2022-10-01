@@ -17,6 +17,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { AdminHttpModule } from './commons/http/http.module';
 import {MatSelectModule} from '@angular/material/select';
+import { VentasComponent } from './ventas/ventas.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 const ANGULAR_MODULES = [
   CommonModule,
@@ -29,7 +33,8 @@ const COMPONENTS = [
   HomeComponent,
   UsuariosComponent,
   TipoProductoComponent,
-  ProductoComponent
+  ProductoComponent,
+  VentasComponent
 ];
 
 const MATERIAL_MODULES = [
@@ -39,7 +44,9 @@ const MATERIAL_MODULES = [
   MatIconModule,
   MatButtonModule,
   MatTableModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ];
 
 @NgModule({

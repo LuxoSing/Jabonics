@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { YtsSweetAlertService } from 'src/app/commons/services/sweet-alert/sweet-alert.service';
-import { TipoProducto } from '../../models/tipoProducto';
+import { TipoProducto } from '../../commons/models/tipoProducto';
 
 @Component({
   selector: 'app-tipoProducto',
