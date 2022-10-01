@@ -1,0 +1,74 @@
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="/"> Interfaz de Tipo de Producto</a>
+  <div class="d-flex align-items-end flex-column">
+    <button type="button" class="btn btn-danger" routerLink="../home">Regresar</button>
+  </div>
+</nav>
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-start h-100">
+    <div class="col-col-xl-10">
+      <div class="d-flex justify-content-center mb-3 pb-1">
+        <!--<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>-->
+        <span class="h1 fw-bold mb-0">Lista de Tipos de Producto</span>
+
+      </div>
+
+      <table class="table table-dark table-striped mb-5">
+
+        <thead>
+          <tr>
+            <th scope="col">IdTipoProducto</th>
+            <th scope="col">Nombre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let TipoProducto of TipoProductoArray; let CTipoProducto=index"
+            (click)="openForEdit(TipoProducto)" [class.active]="TipoProducto == selectedTipoProducto">
+
+            <th scope="row">{{ TipoProducto.CTipoProducto}}</th>
+            <td>{{ TipoProducto.NTipoProducto }}</td>
+            {{TipoProducto.CTipoProducto+1}}
+          </tr>
+
+        </tbody>
+      </table>
+
+      <!-- <div class="card mt-4"> -->
+      <!-- <div class="card-body"> -->
+      <!-- <div class="card-title">
+            Insertar - Eliminar tipoProducto
+          </div> -->
+      <!-- 4 -->
+      <div class="d-flex justify-content-center mb-3 pb-1">
+        <!--<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>-->
+        <span class="h1 fw-bold mb-0">Insertar o Eliminar tipoProducto</span>
+
+      </div>
+
+      <div class="form-outline mb-4">
+        <label class="form-label" for="form2Example18">Tipo de Producto</label>
+        <input type="text" [(ngModel)]="selectedTipoProducto.NTipoProducto" class="form-control form-control-lg" placeholder="Insertar Tipo de Producto"
+        name="NTipoProducto"/>
+      </div>
+
+
+      <div class="p-1 mb-4" style=" justify-content:center; text-align:center">
+        <button (click)="clear()" class="btn btn-info">Limpiar</button>
+        <button (click)="addOrEdit()" class="btn btn-primary">
+          <ng-container *ngIf="selectedTipoProducto.CTipoProducto === 0; else templateA">
+            Crear
+          </ng-container>
+          <ng-template #templateA>
+            Editar
+          </ng-template>
+        </button>
+
+        <!-- 6 Eliminar-->
+
+        <!-- <button *ngIf="selectedTipoProducto.CTipoProducto !==0" class="btn btn-danger" (click)="delete()">Eliminar</button> -->
+
+        <button (click)="delete()" class="btn btn-danger">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
