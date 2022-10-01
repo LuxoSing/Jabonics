@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { YtsSweetAlertService } from 'src/app/commons/services/sweet-alert/sweet-alert.service';
 import { TipoProducto } from '../../models/tipoProducto';
 
 @Component({
@@ -16,9 +17,19 @@ export class TipoProductoComponent implements OnInit {
 
   selectedTipoProducto: TipoProducto = new TipoProducto();
 
+  constructor(
+    private alertService: YtsSweetAlertService
+  ) {
+  }
+  
+
   ngOnInit(): void { }
 
   addOrEdit(): void {
+    if (!this.selectedTipoProducto.NTipoProducto) {
+      this.alertService.showMessage('error', 'Por favor ingrese la descripcion del tipo de producto.');
+      return;
+    }
     //2 da version
     if (this.selectedTipoProducto.CTipoProducto === 0) {
       this.selectedTipoProducto.CTipoProducto = this.TipoProductoArray.length + 1;
@@ -43,6 +54,10 @@ export class TipoProductoComponent implements OnInit {
       }
       this.selectedTipoProducto = new TipoProducto();
     }
+  }
+  
+  clear(): void {
+    this.selectedTipoProducto = new TipoProducto();
   }
 
 }

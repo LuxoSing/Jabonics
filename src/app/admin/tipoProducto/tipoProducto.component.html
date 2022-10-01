@@ -46,13 +46,22 @@
       </div>
 
       <div class="form-outline mb-4">
-        <label class="form-label" for="form2Example17">Nombre de Tipo de Producto</label>
-        <input type="text" [(ngModel)]="selectedTipoProducto.NTipoProducto" class="form-control form-control-lg"
-          placeholder="Ingresar nombre de tipo de producto" name="NTipoProducto" />
+        <label class="form-label" for="form2Example18">Tipo de Producto</label>
+        <input type="text" [(ngModel)]="selectedTipoProducto.NTipoProducto" class="form-control form-control-lg" placeholder="Insertar Tipo de Producto"
+        name="NTipoProducto"/>
       </div>
 
+
       <div class="p-1 mb-4" style=" justify-content:center; text-align:center">
-        <button (click)="addOrEdit()" class="btn btn-primary">Enviar</button>
+        <button (click)="clear()" class="btn btn-info">Limpiar</button>
+        <button (click)="addOrEdit()" class="btn btn-primary">
+          <ng-container *ngIf="selectedTipoProducto.CTipoProducto === 0; else templateA">
+            Crear
+          </ng-container>
+          <ng-template #templateA>
+            Editar
+          </ng-template>
+        </button>
 
         <!-- 6 Eliminar-->
 
