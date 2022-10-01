@@ -2,26 +2,37 @@
     {
         "CVenta": 1,
         "CEmpleado": 1,
-        "DFecha": "2020-01-22T00:00:00"
+        "DFecha": "2020-01-22T00:00:00",
+        "MMonto": 100
     },
     {
         "CVenta": 2,
         "CEmpleado": 2,
-        "DFecha": "2021-01-22T00:00:00"
+        "DFecha": "2021-01-22T00:00:00",
+        "MMonto": 200
     },
     {
         "CVenta": 3,
         "CEmpleado": 3,
-        "DFecha": "2021-05-22T00:00:00"
+        "DFecha": "2021-03-22T00:00:00",
+        "MMonto": 300
     },
     {
         "CVenta": 4,
         "CEmpleado": 4,
-        "DFecha": "2022-04-22T00:00:00"
+        "DFecha": "2021-03-22T00:00:00",
+        "MMonto": 400
     },
     {
         "CVenta": 5,
         "CEmpleado": 5,
-        "DFecha": "2022-06-22T00:00:00"
+        "DFecha": "2022-06-22T00:00:00",
+        "MMonto": 500
+    },
+    {
+        "CVenta": 6,
+        "CEmpleado": 4,
+        "DFecha": "2021-02-22T00:00:00",
+        "MMonto": 20
     }
 ]

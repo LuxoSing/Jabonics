@@ -24,6 +24,12 @@
                     {{ element.DFecha | date:'mediumDate' }}
                 </td>
             </ng-container>
+            <ng-container matColumnDef="monto">
+                <th mat-header-cell *matHeaderCellDef class="text-left">Monto</th>
+                <td class="text-left" mat-cell *matCellDef="let element">
+                    {{ element.MMonto }}
+                </td>
+            </ng-container>
             <ng-container matColumnDef="editar">
                 <th mat-header-cell *matHeaderCellDef>Editar</th>
                 <td mat-cell *matCellDef="let element">
@@ -59,11 +65,6 @@
                 <mat-label>Codigo del Empleado:</mat-label>
                 <input matInput placeholder="" formControlName="CEmpleado">
             </mat-form-field>
-        
-            <!-- <mat-form-field appearance="outline">
-                <mat-label>Fecha:</mat-label>
-                <input matInput placeholder="" formControlName="DFecha">
-            </mat-form-field> -->
 
             <mat-form-field appearance="outline">
                 <mat-label>Fecha:</mat-label>
@@ -72,8 +73,12 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Monto:</mat-label>
+                <input matInput placeholder="" formControlName="MMonto">
+            </mat-form-field>
               
-          
             <div style="display: flex; justify-content: center; gap: 10px;">
                 <button type="submit" mat-raised-button color="primary">Guardar</button>
                 

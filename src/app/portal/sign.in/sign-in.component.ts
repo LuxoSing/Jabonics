@@ -41,7 +41,7 @@ export class SignInComponent implements OnInit {
         this.form = this.fb.group({
             username: ['', [Validators.required]],
             password: ['', [Validators.required]],
-            rememberme: [false] // [Validators.requiredTrue]
+            rememberme: [false] 
         });
     }
 
@@ -58,7 +58,7 @@ export class SignInComponent implements OnInit {
         this.sweetAlertService.showLoading();
         const username = this.usernameControl.value as string;
         const password = this.passwordControl.value as string;
-        if (username === 'user' && password === 'root') {
+        if (username === 'user' && password === 'jabonics') {
             this.signInHttp
                 .signIn(username, password)
                 .pipe(finalize(() => this.sweetAlertService.closeLoading()))
@@ -73,16 +73,9 @@ export class SignInComponent implements OnInit {
             //   this.goToHome();
             // }, 2000);
         }
-    }
-
-    initializeUser(username: string, password: string): void {
-        // const user: IUserGet = {
-        //   nombres: 'Wilder Jonas',
-        //   apellidos: 'Tarazona Campomanes',
-        //   dni: '46437246',
-        //   celular: '967735519'
-        // };
-        // window.localStorage.setItem('user', JSON.stringify(user));
+        else {
+            this.sweetAlertService.closeLoading();
+        }
     }
 
     goToHome(): void {

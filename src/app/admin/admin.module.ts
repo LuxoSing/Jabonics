@@ -6,7 +6,6 @@ import { AdminComponent } from './admin.component';
 import { HomeComponent } from './home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TipoProductoComponent } from './tipoProducto/tipoProducto.component';
 import { YtsSweetAlertModule } from '../commons/services/sweet-alert/sweet-alert.module';
 import { ProductoComponent } from './producto/producto.component';
 import { MatInputModule } from '@angular/material/input';
@@ -18,8 +17,12 @@ import { MatTableModule } from '@angular/material/table';
 import { AdminHttpModule } from './commons/http/http.module';
 import {MatSelectModule} from '@angular/material/select';
 import { VentasComponent } from './ventas/ventas.component';
+// import { ReporteComponent } from './reporte/reporte.component';
+
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TipoProductoComponent } from './tipoProducto/tipoProducto.component';
+import { ReporteComponent } from './reporte/reporte.component';
 
 
 const ANGULAR_MODULES = [
@@ -32,9 +35,10 @@ const COMPONENTS = [
   AdminComponent,
   HomeComponent,
   UsuariosComponent,
-  TipoProductoComponent,
   ProductoComponent,
-  VentasComponent
+  VentasComponent,
+  // ReporteComponent,
+  TipoProductoComponent
 ];
 
 const MATERIAL_MODULES = [
@@ -52,6 +56,7 @@ const MATERIAL_MODULES = [
 @NgModule({
   declarations: [
     ...COMPONENTS,
+    ReporteComponent,
   ],
   imports: [
     ANGULAR_MODULES,

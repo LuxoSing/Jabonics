@@ -107,23 +107,22 @@ export class ProductoComponent implements OnInit {
         productoFound.NTipoProducto = this.TipoProductoList.find(x => x.CTipoProducto === producto.CTipoProducto).NTipoProducto;
         productoFound.MPrecio = producto.MPrecio;
         console.log('productoFound', productoFound);
+        this.clear();
         
       } else {
         // agrego
         producto.NTipoProducto = this.TipoProductoList.find(x => x.CTipoProducto === producto.CTipoProducto).NTipoProducto;
+
         const ids = this.productoList.map(object => {
           return object.CProducto;
         });
         console.log(ids);
-        
         const max = Math.max.apply(null,ids);
         producto.CProducto = max +1;
 
         this.productoList.push(producto);
         this.dataSource = new MatTableDataSource(this.productoList);
-
-        // console.log('max', max);
-        // console.log('ids', ids);
+        this.clear();
       }
     }
   }

@@ -30,12 +30,14 @@ export class VentasComponent implements OnInit {
       CVenta: [null],
       CEmpleado: [null, [Validators.required]],
       DFecha: [null, [Validators.required]],
+      MMonto: [null, [Validators.required]]
     });
     this.dataSource = new MatTableDataSource();
     this.displayedColumns = [
       'codigo',
       'empleado',
       'fecha',
+      'monto',
       'editar',
       'eliminar'
     ];
@@ -68,7 +70,8 @@ export class VentasComponent implements OnInit {
     this.ventasForm.setValue({
       CVenta: element.CVenta,
       CEmpleado: element.CEmpleado,
-      DFecha: element.DFecha
+      DFecha: element.DFecha,
+      MMonto: element.MMonto
     });
   }
 
@@ -87,7 +90,10 @@ export class VentasComponent implements OnInit {
         const ventasFound = this.VentasList.find(x => x.CVenta === ventas.CVenta);
         ventasFound.CEmpleado = ventas.CEmpleado;
         ventasFound.DFecha = ventas.DFecha;
+        ventasFound.MMonto = ventas.MMonto;
         console.log('ventasFound', ventasFound);
+        this.clear();
+        
         
       } else {
         // agrego
@@ -101,6 +107,7 @@ export class VentasComponent implements OnInit {
 
         this.VentasList.push(ventas);
         this.dataSource = new MatTableDataSource(this.VentasList);
+        this.clear();
 
         // console.log('max', max);
         // console.log('ids', ids);
@@ -109,10 +116,11 @@ export class VentasComponent implements OnInit {
   }
 
   clear(): void {
-    this.ventasForm.patchValue({
+    this.ventasForm.reset({
       CVenta: null,
       CEmpleado: null,
-      DFecha: null
+      DFecha: null,
+      MMonto: null
     });
     this.labelAddOrEdit = 'Agregar';
   }

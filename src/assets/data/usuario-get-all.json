@@ -1,0 +1,27 @@
+[
+    {
+        "CUsuario": 1,
+        "NUsuario": "Luis",
+        "TContrasena": "123"
+    },
+    {
+        "CUsuario": 2,
+        "NUsuario": "Carlos",
+        "TContrasena": "234"
+    },
+    {
+        "CUsuario": 3,
+        "NUsuario": "Mike",
+        "TContrasena": "345"
+    },
+    {
+        "CUsuario": 4,
+        "NUsuario": "Alan",
+        "TContrasena": "456"
+    },
+    {
+        "CUsuario": 5,
+        "NUsuario": "Cludia",
+        "TContrasena": "678"
+    }
+]

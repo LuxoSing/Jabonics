@@ -1,74 +1,64 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand" href="/"> Interfaz de Tipo de Producto</a>
-  <div class="d-flex align-items-end flex-column">
-    <button type="button" class="btn btn-danger" routerLink="../home">Regresar</button>
-  </div>
-</nav>
-<div class="container py-5 h-100">
-  <div class="row d-flex justify-content-center align-items-start h-100">
-    <div class="col-col-xl-10">
-      <div class="d-flex justify-content-center mb-3 pb-1">
-        <!--<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>-->
-        <span class="h1 fw-bold mb-0">Lista de Tipos de Producto</span>
-
-      </div>
-
-      <table class="table table-dark table-striped mb-5">
-
-        <thead>
-          <tr>
-            <th scope="col">IdTipoProducto</th>
-            <th scope="col">Nombre</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let TipoProducto of TipoProductoArray; let CTipoProducto=index"
-            (click)="openForEdit(TipoProducto)" [class.active]="TipoProducto == selectedTipoProducto">
-
-            <th scope="row">{{ TipoProducto.CTipoProducto}}</th>
-            <td>{{ TipoProducto.NTipoProducto }}</td>
-            {{TipoProducto.CTipoProducto+1}}
-          </tr>
-
-        </tbody>
-      </table>
-
-      <!-- <div class="card mt-4"> -->
-      <!-- <div class="card-body"> -->
-      <!-- <div class="card-title">
-            Insertar - Eliminar tipoProducto
-          </div> -->
-      <!-- 4 -->
-      <div class="d-flex justify-content-center mb-3 pb-1">
-        <!--<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>-->
-        <span class="h1 fw-bold mb-0">Insertar o Eliminar tipoProducto</span>
-
-      </div>
-
-      <div class="form-outline mb-4">
-        <label class="form-label" for="form2Example18">Tipo de Producto</label>
-        <input type="text" [(ngModel)]="selectedTipoProducto.NTipoProducto" class="form-control form-control-lg" placeholder="Insertar Tipo de Producto"
-        name="NTipoProducto"/>
-      </div>
-
-
-      <div class="p-1 mb-4" style=" justify-content:center; text-align:center">
-        <button (click)="clear()" class="btn btn-info">Limpiar</button>
-        <button (click)="addOrEdit()" class="btn btn-primary">
-          <ng-container *ngIf="selectedTipoProducto.CTipoProducto === 0; else templateA">
-            Crear
+<div style="display: flex; justify-content: center;">
+  <div style="width: 600px;">
+      <mat-form-field appearance="standard">
+          <mat-label>Buscar</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+      </mat-form-field>
+      <br />
+      <table mat-table [dataSource]="dataSource" matSort style="width: 100%;">
+          <ng-container matColumnDef="codigo" class="text-right">
+              <th mat-header-cell *matHeaderCellDef>Codigo</th>
+              <td mat-cell *matCellDef="let element ">
+                  {{ element.CTipoProducto}}
+              </td>
           </ng-container>
-          <ng-template #templateA>
-            Editar
-          </ng-template>
-        </button>
-
-        <!-- 6 Eliminar-->
-
-        <!-- <button *ngIf="selectedTipoProducto.CTipoProducto !==0" class="btn btn-danger" (click)="delete()">Eliminar</button> -->
-
-        <button (click)="delete()" class="btn btn-danger">Eliminar</button>
-      </div>
-    </div>
+          <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef class="text-left">Nombre Usuario</th>
+              <td class="text-left" mat-cell *matCellDef="let element">
+                  {{ element.NTipoProducto }}
+              </td>
+          </ng-container>
+          <ng-container matColumnDef="editar">
+              <th mat-header-cell *matHeaderCellDef>Editar</th>
+              <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button (click)="edit(element)">
+                      <mat-icon>edit</mat-icon>
+                  </button>
+              </td>
+          </ng-container>
+          <ng-container matColumnDef="eliminar">
+              <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+              <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button (click)="delete(element.CTipoProducto)">
+                      <mat-icon>delete</mat-icon>
+                  </button>
+              </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      
+          <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                  No se encuentra la información solicitada.
+              </td>
+          </tr>
+      </table>
+      <br />
+      <br />
+      <h1>{{labelAddOrEdit}} tipoProducto</h1>
+      <form [formGroup]="tipoProductoForm" (ngSubmit)="save()" style="display: flex; flex-direction: column;">
+  
+          <mat-form-field appearance="outline">
+              <mat-label>Nombre del Tipo de Producto:</mat-label>
+              <input matInput placeholder="" formControlName="NTipoProducto">
+          </mat-form-field>
+            
+          <div style="display: flex; justify-content: center; gap: 10px;">
+              <button type="submit" mat-raised-button color="primary">Guardar</button>
+              
+              <button type="button" (click)="clear()" mat-raised-button>Limpiar</button>
+            </div>
+        </form>
   </div>
 </div>
