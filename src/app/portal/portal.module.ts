@@ -17,6 +17,9 @@ import { PortalHttpModule } from './commons/http/http.module';
 import { SignInComponent } from './sign.in/sign-in.component';
 import { YtsSessionModule } from '../commons/services/session/session.module';
 import { YtsSweetAlertModule } from '../commons/services/sweet-alert/sweet-alert.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { SobreNosotrosComponent } from './sobre-nosotros/sobre-nosotros.component';
 
 const ANGULAR_MODULES = [
   CommonModule,
@@ -45,7 +48,10 @@ const COMPONENTS = [
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    DashboardComponent,
+    ContactUsComponent,
+    SobreNosotrosComponent,
   ],
   imports: [
     ...ANGULAR_MODULES,

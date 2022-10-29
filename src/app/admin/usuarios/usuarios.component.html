@@ -1,72 +1,119 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand" href="/"> Interfaz de Usuario</a>
-  <div class="d-flex align-items-end flex-column">
-    <button type="button" class="btn btn-danger" routerLink="../home">Regresar</button>
-  </div>
-</nav>
-<div class="container py-5 h-100">
-  <div class="row d-flex justify-content-center align-items-start h-100">
-    <div class="col-col-xl-10">
-      <div class="d-flex justify-content-center mb-3 pb-1" >
-        <!--<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>-->
-        <span class="h1 fw-bold mb-0">Lista de Usuarios</span>
-        
-      </div>
-      
-      <table class="table table-dark table-striped mb-5">
-  
-        <thead>
-          <tr>
-                <th scope="col">IdUsuario</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Contraseña</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let Usuario of UsuarioArray; let CUsuario=index" (click)="openForEdit(Usuario)" [class.active]="Usuario == selectedUsuario">
-                    
-                <th scope="row">{{ Usuario.CUsuario}}</th>
-                <td>{{ Usuario.NUsuario }}</td>
-                <td>{{ Usuario.TContrasena }}</td>
-                {{Usuario.CUsuario+1}}
-            </tr>
-    
-        </tbody>
-      </table>
+<body style="background-color: rgb(99, 37, 126);">
 
-      <!-- <div class="card mt-4"> -->
-        <!-- <div class="card-body"> -->
-          <!-- <div class="card-title">
-            Insertar - Eliminar usuario
-          </div> -->
-          <!-- 4 -->
-          <div class="d-flex justify-content-center mb-3 pb-1" >
-            <!--<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>-->
-            <span class="h1 fw-bold mb-0">Insertar o Eliminar usuario</span>
-            
+    <div class="container-fluid">
+
+        <div class="row ">
+          <div class="col-8">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+              class="img-fluid img-thumbnail p-1 mb-2" alt="Responsive image" width="100px" alt="logo"
+              style="background-color: transparent; border-color: transparent;">
+            <mat-card-title style="color:white">Jabonics</mat-card-title>
           </div>
-
-            <div class="form-outline mb-4">
-              <label class="form-label" for="form2Example17">Nombre de usuario</label>
-              <input type="text" [(ngModel)]="selectedUsuario.NUsuario" class="form-control form-control-lg" placeholder="Ingresar nombre de usuario"
-              name="NUsuario"/>
+    
+          <div class="col-4">
+            <div class="d-flex justify-content-end p-3 mb-2">
+              <button type="button" class="btn btn-danger" [routerLink]="['/','admin']">Volver</button>
             </div>
-            
-            <div class="form-outline mb-4">
-              <label class="form-label" for="form2Example18">Contraseña</label>
-              <input type="text" [(ngModel)]="selectedUsuario.TContrasena" class="form-control form-control-lg" placeholder="Insertar contraseña"
-              name="TContrasena"/>
+          </div>
+        </div>
+
+    <div class="container-sm">
+        <div class="row">
+            <div class="col-sm">
+                <div class="vertical-center_1" style="display: flex; justify-content: center;">
+                    <div style="width: 600px;">
+
+
+                        <mat-form-field appearance="standard">
+                            <mat-label style="color:white">Buscar</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                        </mat-form-field>
+                        <br />
+                        <table mat-table [dataSource]="dataSource" matSort
+                            style="width: 100%; background-color:#c0a0c3; ">
+                            <ng-container matColumnDef="codigo" class="text-right">
+                                <th mat-header-cell *matHeaderCellDef style="color:rgb(13, 13, 13)">Codigo</th>
+                                <td style="color:rgb(13, 13, 13)" mat-cell *matCellDef="let element ">
+                                    {{ element.CUsuario}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef class="text-left" style="color:rgb(13, 13, 13)">
+                                    Nombre Usuario</th>
+                                <td style="color:rgb(13, 13, 13)" class="text-left" mat-cell *matCellDef="let element">
+                                    {{ element.NUsuario }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="contrasena">
+                                <th mat-header-cell *matHeaderCellDef class="text-left" style="color:rgb(13, 13, 13)">
+                                    Contraseña</th>
+                                <td style="color:rgb(13, 13, 13)" class="text-left" mat-cell *matCellDef="let element">
+                                    {{ element.TContrasena }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="editar">
+                                <th mat-header-cell *matHeaderCellDef style="color:rgb(13, 13, 13)">Editar</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-icon-button (click)="edit(element)">
+                                        <mat-icon style="color:rgb(13, 13, 13)">edit</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="eliminar">
+                                <th mat-header-cell *matHeaderCellDef style="color:rgb(13, 13, 13)">Eliminar</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-icon-button (click)="delete(element.CUsuario)">
+                                        <mat-icon style="color:rgb(13, 13, 13)">delete</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="color:rgb(13, 13, 13)">
+                                    No se encuentra la información solicitada.
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+
+                    </div>
+                </div>
             </div>
+            <div class="col-sm">
 
-            <div class="p-1 mb-4" style=" justify-content:center; text-align:center">
-              <button (click)="addOrEdit()" class="btn btn-primary">Enviar</button>
-              
-            <!-- 6 Eliminar-->
+                <div class="vertical-center_2" style="display: flex; justify-content: center;">
 
-            <!-- <button *ngIf="selectedUsuario.CUsuario !==0" class="btn btn-danger" (click)="delete()">Eliminar</button> -->
+                    <form class="container-sm p-3 mb-2" style="background-color:#c0a0c3; border-radius: 20px;">
+                        <h1 style="color:rgb(13, 13, 13)">{{labelAddOrEdit}} usuarios</h1>
+                        <form [formGroup]="usuariosForm" (ngSubmit)="save()"
+                            style="display: flex; flex-direction: column;">
 
-              <button (click)="delete()" class="btn btn-danger">Eliminar</button>
+                            <mat-form-field appearance="outline">
+                                <mat-label style="color:rgb(13, 13, 13)">Nombre del usuario:</mat-label>
+                                <input matInput placeholder="" formControlName="NUsuario">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label style="color:rgb(13, 13, 13)">Contraseña:</mat-label>
+                                <input type="password" matInput placeholder="" formControlName="TContrasena">
+                            </mat-form-field>
+
+
+                            <div style="display: flex; justify-content: center; gap: 10px;">
+                                <button type="submit" mat-raised-button color="primary"
+                                    style="color:white">Guardar</button>
+
+                                <button type="button" (click)="clear()" mat-raised-button>Limpiar</button>
+                            </div>
+                        </form>
+                    </form>
+                </div>
             </div>
-      </div>
+        </div>
     </div>
-</div>
+    </div>
+</body>

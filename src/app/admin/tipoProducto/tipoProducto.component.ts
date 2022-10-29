@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TipoProducto } from '../../models/tipoProducto';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { last } from 'rxjs';
+import { ITipoProducto } from '../commons/interfaces/tipo-producto.interface';
+import { TipoProductoHttp } from '../commons/http/tipo-producto.http';
+
 
 @Component({
   selector: 'app-tipoProducto',
@@ -8,41 +14,102 @@ import { TipoProducto } from '../../models/tipoProducto';
 })
 export class TipoProductoComponent implements OnInit {
 
-  TipoProductoArray: TipoProducto[] = [
-    { CTipoProducto: 1, NTipoProducto: "Administrador"},
-    { CTipoProducto: 2, NTipoProducto: "Contabilidad"},
-    { CTipoProducto: 3, NTipoProducto: "Recursos Humanos"}
-  ];
+  tipoProductoForm: FormGroup;
+  dataSource: MatTableDataSource<ITipoProducto>;
+  displayedColumns: string[];
+  TipoProductoList: ITipoProducto[] = [];
+  labelAddOrEdit: string = 'Agregar';
 
-  selectedTipoProducto: TipoProducto = new TipoProducto();
-
-  ngOnInit(): void { }
-
-  addOrEdit(): void {
-    //2 da version
-    if (this.selectedTipoProducto.CTipoProducto === 0) {
-      this.selectedTipoProducto.CTipoProducto = this.TipoProductoArray.length + 1;
-      this.TipoProductoArray.push(this.selectedTipoProducto);
-    }
-    this.selectedTipoProducto = new TipoProducto();
+  constructor(
+    private fb: FormBuilder,
+    private tipoProductoHttp: TipoProductoHttp,
+    private router: Router,
+    private activatedRoute : ActivatedRoute,
+  ) {
+    this.tipoProductoForm = this.fb.group({
+      CTipoProducto: [null],
+      NTipoProducto: [null, [Validators.required]]
+    });
+    this.dataSource = new MatTableDataSource();
+    this.displayedColumns = [
+      'codigo',
+      'nombre',
+      'editar',
+      'eliminar'
+    ];
   }
 
-  openForEdit(TipoProducto: TipoProducto): void {
-    this.selectedTipoProducto = TipoProducto;
+  ngOnInit(): void {
+    this.getAllTipoProducto();
   }
-  delete(): void {
-    if (confirm('¿Estás seguro que deseas eliminarlo?')) {
-      this.TipoProductoArray = this.TipoProductoArray.filter(x => x != this.selectedTipoProducto);
-      for (let i = 0; i < this.TipoProductoArray.length; i++) {
-        if (i >= this.selectedTipoProducto.CTipoProducto - 1) {
-          this.TipoProductoArray[i].CTipoProducto = this.TipoProductoArray[i].CTipoProducto - 1;
-        }
-        if (i < this.selectedTipoProducto.CTipoProducto) {
-          this.TipoProductoArray[i].CTipoProducto = this.TipoProductoArray[i].CTipoProducto;
-        }
+
+  getAllTipoProducto(): void {
+    console.log('getAllTipoProducto')
+    this.tipoProductoHttp
+      .getAll()
+      .subscribe(res => {
+        console.log('res', res)
+        this.TipoProductoList = res;
+        this.dataSource = new MatTableDataSource(res);
+      });
+  }
+
+  delete(codigo: number): void {
+    const tipoProducto = this.TipoProductoList.filter(item => item.CTipoProducto !== codigo);
+    this.TipoProductoList = tipoProducto;
+    this.dataSource = new MatTableDataSource(tipoProducto);
+  }
+
+  edit(element: ITipoProducto): void {
+    console.log('element', element)
+    this.labelAddOrEdit = 'Editar';
+    this.tipoProductoForm.setValue({
+      CTipoProducto: element.CTipoProducto,
+      NTipoProducto: element.NTipoProducto
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  save(): void {
+    if (this.tipoProductoForm.valid) {
+      console.log('save')
+      const tipoProducto = this.tipoProductoForm.value as ITipoProducto;
+      console.log('tipoProducto', tipoProducto)
+      if (tipoProducto.CTipoProducto) {
+        // edit
+        const tipoProductoFound = this.TipoProductoList.find(x => x.CTipoProducto === tipoProducto.CTipoProducto);
+        tipoProductoFound.NTipoProducto = tipoProducto.NTipoProducto;
+        console.log('tipoProductoFound', tipoProductoFound);
+        this.clear();
+        
+      } else {
+        // agrego
+        const ids = this.TipoProductoList.map(object => {
+            return object.CTipoProducto;
+          });
+        console.log(ids);
+        
+        const max = Math.max.apply(null,ids);
+        tipoProducto.CTipoProducto = max +1;
+
+        this.TipoProductoList.push(tipoProducto);
+        this.dataSource = new MatTableDataSource(this.TipoProductoList);
+        this.clear();
+        // console.log('max', max);
+        // console.log('ids', ids);
       }
-      this.selectedTipoProducto = new TipoProducto();
     }
   }
 
+  clear(): void {
+    this.tipoProductoForm.reset({
+      CTipoProducto: null,
+      NTipoProducto: null
+    });
+    this.labelAddOrEdit = 'Agregar';
+  }
 }

@@ -7,6 +7,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 })
 export class YtsSweetAlertService {
     iconColor!: string;
+    Swal: any;
 
     showLoading(title = 'Cargando ...'): void {
         Swal.fire({
@@ -30,16 +31,20 @@ export class YtsSweetAlertService {
         } else if (icon == 'error') {
             this.iconColor = '#E64442';
         }
+        else if (icon == 'warning') {
+            this.iconColor = '245, 195, 120';
+        }
 
         setTimeout(() => {
             Swal.fire({
                 title,
                 icon,
                 iconColor: this.iconColor,
-                showConfirmButton: false,
+                showConfirmButton: true,
                 timer,
                 heightAuto: false
             });
         });
     }
+    
 }
